@@ -1,0 +1,14 @@
+<html>
+<body>
+<div  *ngIf="userFormat"class="jumbotron">
+  <h1 class="display-3">Hello, {{userFormat.name}} {{userFormat.surname}}</h1>
+  <p class="lead">Your E-Mail: {{userFormat.email}} </p>
+  <p class="lead">Your phone number: {{userFormat.phone}}</p>
+  <p class="lead">Your tc id: {{userFormat.tc}}</p>
+
+</div>
+
+
+<app-photo-upload></app-photo-upload>
+</body>
+</html>
