@@ -1,5 +1,9 @@
 <html>
 <body>
+
+
+
+
 <div  *ngIf="userFormat"class="jumbotron">
   <h1 class="display-3">Hello, {{userFormat.name}} {{userFormat.surname}}</h1>
   <p class="lead">Your E-Mail: {{userFormat.email}} </p>
@@ -7,8 +11,19 @@
   <p class="lead">Your tc id: {{userFormat.tc}}</p>
 
 </div>
+<br>
 
 
-<app-photo-upload></app-photo-upload>
+
+<div  style="text-align: center;" class="container" *ngIf="!hasUserSecret">
+<h3> You dont have any secret key. Please create one</h3>
+<h3 > Create Secret Key With Your Ears</h3>
+<a routerLink="/takePhoto">Using Camera</a>
+<br>
+<a routerLink="/photoUpload">Upload Ear app-capture-image</a>
+</div>
+
+
+
 </body>
 </html>

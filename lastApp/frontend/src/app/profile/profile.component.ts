@@ -13,6 +13,7 @@ export class ProfileComponent implements OnInit {
   constructor(private authService: AuthService) { }
   email: string;
   userFormat: GetUserFormat;
+  hasUserSecret;
 
   ngOnInit() {
     this.email = this.authService.getAuthenticatedUser();
@@ -22,6 +23,7 @@ export class ProfileComponent implements OnInit {
         this.userFormat = data as GetUserFormat ;
         console.log(this.userFormat);
         console.log(data);
+        this.hasUserSecret = false;
       }
     );
 

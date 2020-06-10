@@ -15,6 +15,7 @@ import { MainComponent } from './main/main.component';
 import { RouteGuardService } from './services/routeGuard.service';
 import { PhotoUploadComponent } from './photo-upload/photo-upload.component';
 import {FileUploadModule} from 'ng2-file-upload';
+import { CaptureImageComponent } from './capture-image/capture-image.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {FileUploadModule} from 'ng2-file-upload';
     RegisterComponent,
     ProfileComponent,
     MainComponent,
-    PhotoUploadComponent
+    PhotoUploadComponent,
+    CaptureImageComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,7 @@ import {FileUploadModule} from 'ng2-file-upload';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    FileUploadModule 
+    FileUploadModule
   ],
   providers: [AlertifyService, RouteGuardService],
   bootstrap: [AppComponent]

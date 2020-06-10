@@ -7,6 +7,7 @@ import { RegisterUser } from '../models/registerUser';
 import { Observable, throwError } from 'rxjs';
 import {map, tap, catchError } from 'rxjs/operators';
 import { GetUserFormat } from '../models/getUserFormat';
+import { environment } from 'src/environments/environment';
 
 export const AUTHENTICATED_USER = 'authenticatedUser';
 
@@ -23,7 +24,7 @@ export class AuthService {
   ) { }
 
 
-  path = 'http://127.0.0.1:5000/';
+  path = environment.path;
   userToken: any;
   TOKEN_KEY = 'token';
 
