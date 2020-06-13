@@ -16,6 +16,7 @@ import { RouteGuardService } from './services/routeGuard.service';
 import { PhotoUploadComponent } from './photo-upload/photo-upload.component';
 import {FileUploadModule} from 'ng2-file-upload';
 import { CaptureImageComponent } from './capture-image/capture-image.component';
+import { EarService } from './services/ear.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { CaptureImageComponent } from './capture-image/capture-image.component';
     ReactiveFormsModule,
     FileUploadModule
   ],
-  providers: [AlertifyService, RouteGuardService],
+  providers: [AlertifyService, RouteGuardService, EarService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

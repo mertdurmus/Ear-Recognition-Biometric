@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { GetUserFormat } from '../models/getUserFormat';
+import { EarService } from '../services/ear.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,10 +11,11 @@ import { GetUserFormat } from '../models/getUserFormat';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private earService: EarService) { }
   email: string;
   userFormat: GetUserFormat;
   hasUserSecret;
+  secretKey;
 
   ngOnInit() {
     this.email = this.authService.getAuthenticatedUser();
@@ -23,11 +25,18 @@ export class ProfileComponent implements OnInit {
         this.userFormat = data as GetUserFormat ;
         console.log(this.userFormat);
         console.log(data);
-        this.hasUserSecret = false;
+        this.hasUserSecret = true;
       }
     );
 
   }
 
+  getSecretKey() {
+    this.earService.getSecretKey('5').subscribe(data => {
+      this.secretKey = data;
+      console.log(data);
+    }
+  );
+  }
 
 }

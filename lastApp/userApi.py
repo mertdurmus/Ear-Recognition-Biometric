@@ -13,6 +13,8 @@ import datetime
 from functools import wraps
 import hashlib, binascii, os
 
+from earApi import init
+
 
 
 def token_required(token):   
@@ -242,6 +244,13 @@ def upload_image():
     return json.dumps("no")
 
 
+
+@app.route("/getSecretKey",methods=['POST'])
+def getSecretKey():
+    tx_data = request.json
+    nonce=tx_data['nonce']   
+    secretKey = init(float(nonce))
+    return json.dumps({'secretKey':secretKey})
 
 
 
