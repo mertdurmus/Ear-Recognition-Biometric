@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { HttpHeaders } from '@angular/common/http';
 import { AlertifyService } from '../services/alertify.service';
+import { Router } from '@angular/router';
 
 
 const URL = 'http://127.0.0.1:5000/uploadImage';
@@ -20,7 +21,8 @@ export class PhotoUploadComponent implements OnInit {
   response: string;
 
 
-  constructor( private alert: AlertifyService) { }
+  constructor( private alert: AlertifyService,
+               private router: Router) { }
 
 
 
@@ -50,6 +52,7 @@ export class PhotoUploadComponent implements OnInit {
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       this.alert.success('Succesfully updated');
       console.log(item);
+      this.router.navigateByUrl('/profile');
     };
   }
   // tslint:disable-next-line:use-life-cycle-interface

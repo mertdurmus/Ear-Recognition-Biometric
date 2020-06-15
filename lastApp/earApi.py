@@ -163,12 +163,13 @@ def secretKey(angles,list2, nonce):
     return y
 
 
-def init(nonce):
-    readImage(name)
+def init(nonce, imageName):
+    print(imageName)
+    readImage(imageName)
     t = secretKey(angles, list2, nonce)
     return t
 
-#init(4)
+#init(4, '01.jpg')
 
 """
 readImage(name)

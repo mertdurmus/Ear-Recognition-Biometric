@@ -32,7 +32,8 @@ export class ProfileComponent implements OnInit {
   }
 
   getSecretKey() {
-    this.earService.getSecretKey('5').subscribe(data => {
+    const x = Math.floor(Math.random() * 6) + 1;
+    this.earService.getSecretKey(x.toString()).subscribe(data => {
       this.secretKey = data;
       console.log(data);
     }

@@ -17,6 +17,9 @@ from earApi import init
 
 
 
+
+imageName = ""
+
 def token_required(token):   
     invalid_msg = {
         'message': 'Invalid token. Registeration and / or authentication required',
@@ -237,19 +240,25 @@ def upload_image():
     if request.method == "POST":
         if request.files:
             image = request.files["file"]
-            print(image)
+            global imageName
+            #imageName = '\'' + image.filename + '\''   
+            imageName = image.filename
+            print(imageName)
             image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
+            #secretKey = init(5, imageName)
+            #print(secretKey)
             return json.dumps("successful")
     print()
     return json.dumps("no")
 
-
+    
 
 @app.route("/getSecretKey",methods=['POST'])
 def getSecretKey():
     tx_data = request.json
-    nonce=tx_data['nonce']   
-    secretKey = init(float(nonce))
+    nonce=tx_data['nonce'] 
+    print(imageName)
+    secretKey = init(float(nonce), imageName)
     return json.dumps({'secretKey':secretKey})
 
 
