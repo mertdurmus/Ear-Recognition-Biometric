@@ -10,7 +10,7 @@ import { GetUserFormat } from '../models/getUserFormat';
 import { environment } from 'src/environments/environment';
 
 export const AUTHENTICATED_USER = 'authenticatedUser';
-
+export const AUTHENTICATED_USER_TC = 'authenticatedUserTc';
 
 @Injectable({
   providedIn: 'root'
@@ -86,6 +86,17 @@ export class AuthService {
   }
 
 
+  hasUserKey() {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json'
+     })
+    };
+    let tc = sessionStorage.getItem(AUTHENTICATED_USER_TC);
+    return this.httpClient.post<GetUserFormat>(this.path + 'hasUserBio', {'user': tc}, httpOptions).pipe(
+          tap(data => {}),
+          catchError(this.handleError)
+        );
+  }
 
   get token() {
     return localStorage.getItem(this.TOKEN_KEY);

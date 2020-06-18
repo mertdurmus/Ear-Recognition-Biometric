@@ -10,7 +10,7 @@
     </div>
     <br />
 
-    <div style="text-align: center;" class="container" *ngIf="hasUserSecret">
+    <div style="text-align: center;" class="container" *ngIf="hasUserSecret2">
       <h3>You have ear print. Create secret key</h3>
       <button class="btn btn-success" (click)="getSecretKey()">
         getSecretKey
@@ -23,12 +23,18 @@
 
     </div>
 
-    <div style="text-align: center;" class="container" *ngIf="!hasUserSecret">
+    <div style="text-align: center;" class="container" *ngIf="!hasUserSecret2">
       <h3>You dont have any secret key. Please create one</h3>
       <h3>Create Secret Key With Your Ears</h3>
       <a routerLink="/takePhoto">Using Camera</a>
       <br />
       <a routerLink="/photoUpload">Upload Ear app-capture-image</a>
+      <br>
+      <button *ngIf="!hasUserSecret2" class="btn btn-success" (click)="getSecretKey()">
+        createEarPrint
+      </button>
     </div>
+
+
   </body>
 </html>

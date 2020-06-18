@@ -10,11 +10,22 @@ import cv2
 import imutils
 import numpy as np 
 import math  
+import mysql.connector
 
 name = '01.jpg'
 angles=[]
 list2=[]
 new_list2 = []
+tc = '';
+
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  passwd="toor",
+    database="earRecognition"
+)
+
 
 def calculateDistance(x1,y1,x2,y2):  
      dist = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)  
@@ -147,6 +158,17 @@ def getSecondVector(ickontur, x_m_point, y_m_point):
     ##new_list2 is my second feature vector
         
 
+def save(angles, list2):
+    list2=np.array(list2)
+    new_list2 = np.unique(list2, axis=0)
+    mycursor = mydb.cursor()
+    var_string = ', '.join(str(v) for v in angles)
+    var_string2 = ', '.join(str(v) for v in new_list2)
+    sql = "INSERT INTO features (f1, f2, user_tc) VALUES (%s, %s,%s)"
+    val = (var_string, var_string2, tc)
+    mycursor.execute(sql, val)    
+    mydb.commit()
+    print(mycursor.rowcount, "record inserted.")
 
 
 
@@ -162,15 +184,55 @@ def secretKey(angles,list2, nonce):
     y = y * nonce * nonce
     return y
 
+def secretKey1(angles, nonce):
+    x=(angles[0]*angles[2])/(angles[1]*angles[3])
+    print(x)
+    x = x * nonce
+    y = angles[2] * angles[3]
+    y = y / x
+    y = y * nonce * nonce
+    return y
 
-def init(nonce, imageName):
-    print(imageName)
-    readImage(imageName)
-    t = secretKey(angles, list2, nonce)
-    return t
+
+def init(nonce, imageName, userId):
+    if(hasUserSave(userId)):
+        cur = mydb.cursor()
+        query_string="SELECT f1, f2 FROM features WHERE user_tc= %s"
+        cur.execute(query_string, (userId,))
+        rows = cur.fetchall()
+        for row in rows:
+            x=row
+        res1 = x[0].split(', ')   
+        new_list = []
+        for item in res1:
+            new_list.append(float(item))
+        print(new_list)
+        t = secretKey1(new_list, nonce)
+        return t
+    else:
+        readImage(imageName)
+        save(angles, list2)
+        t = secretKey(angles, list2, nonce)
+        return t
+
+def hasUserSave(userId):
+    mycursor = mydb.cursor()
+    #adr = userId
+    global tc
+    tc = userId
+    sql ="SELECT * FROM features WHERE user_tc = %s"
+    mycursor.execute(sql, (userId,))    
+    myresult = mycursor.fetchall()
+    if(myresult):
+        return True
+    else:
+        return False
+    
 
 #init(4, '01.jpg')
-
+#save(angles, list2)
+#con = hasUserSave('5198857610')
+#print(con)
 """
 readImage(name)
 print(angles)

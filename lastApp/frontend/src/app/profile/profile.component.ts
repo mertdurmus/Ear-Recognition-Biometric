@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthService, AUTHENTICATED_USER_TC } from '../services/auth.service';
 import { GetUserFormat } from '../models/getUserFormat';
 import { EarService } from '../services/ear.service';
 
@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit {
   email: string;
   userFormat: GetUserFormat;
   hasUserSecret;
+  hasUserSecret2: boolean;
   secretKey;
 
   ngOnInit() {
@@ -25,7 +26,20 @@ export class ProfileComponent implements OnInit {
         this.userFormat = data as GetUserFormat ;
         console.log(this.userFormat);
         console.log(data);
-        this.hasUserSecret = true;
+        sessionStorage.setItem(AUTHENTICATED_USER_TC, this.userFormat.tc);
+        setTimeout(() => {}, 100);
+        this.authService.hasUserKey().subscribe(dd => {
+          this.hasUserSecret = dd['control'];
+          console.log(this.hasUserSecret);
+          if(this.hasUserSecret  === true){
+            this.hasUserSecret2 = true;
+            console.log(this.hasUserSecret2);
+          }
+          else {
+            this.hasUserSecret2 = false;
+            console.log(this.hasUserSecret2);
+          }
+        });
       }
     );
 

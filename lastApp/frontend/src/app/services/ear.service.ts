@@ -5,6 +5,7 @@ import { AlertifyService } from './alertify.service';
 import { environment } from 'src/environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
+import { AUTHENTICATED_USER_TC } from './auth.service';
 
 @Injectable()
 export class EarService {
@@ -24,7 +25,8 @@ export class EarService {
      headers: new HttpHeaders({ 'Content-Type': 'application/json'
     })
    };
-    return this.httpClient.post<number>(this.path + 'getSecretKey', { 'nonce' : nonce}, httpOptions).pipe(
+    let tc = sessionStorage.getItem(AUTHENTICATED_USER_TC);
+    return this.httpClient.post<number>(this.path + 'getSecretKey', { 'nonce' : nonce, 'user' : tc}, httpOptions).pipe(
          tap(data => this.alertifyService.success(data.toString())),
          catchError(this.handleError)
        );

@@ -14,7 +14,7 @@ from functools import wraps
 import hashlib, binascii, os
 
 from earApi import init
-
+from earApi import hasUserSave
 
 
 
@@ -257,10 +257,20 @@ def upload_image():
 def getSecretKey():
     tx_data = request.json
     nonce=tx_data['nonce'] 
+    user_tc = tx_data['user']
+    print(user_tc)
     print(imageName)
-    secretKey = init(float(nonce), imageName)
+    secretKey = init(float(nonce), imageName, user_tc)
     return json.dumps({'secretKey':secretKey})
 
+
+
+@app.route("/hasUserBio",methods=['POST'])
+def hasUserBio():
+    tx_data = request.json
+    user_tc = tx_data['user']
+    control = hasUserSave(user_tc)
+    return json.dumps({'control':control})
 
 
 """
